@@ -1,0 +1,126 @@
+<table mat-table [dataSource]="users">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let user">{{ user.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="nome">
+    <th mat-header-cell *matHeaderCellDef>Nome</th>
+    <td mat-cell *matCellDef="let user">{{ user.nome }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="cognome">
+    <th mat-header-cell *matHeaderCellDef>Cognome</th>
+    <td mat-cell *matCellDef="let user">{{ user.cognome }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef>Email</th>
+    <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="dataNascita">
+    <th mat-header-cell *matHeaderCellDef>Data di Nascita</th>
+    <td mat-cell *matCellDef="let user">{{ user.dataNascita }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Azioni</th>
+    <td mat-cell *matCellDef="let user">
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="deleteUser(user)"
+        style="margin-right: 8px"
+      >
+        Elimina
+      </button>
+      <button mat-icon-button color="primary" (click)="editUser(user)">
+        Modifica
+      </button>
+    </td>
+  </ng-container>
+
+  <tr
+    mat-header-row
+    *matHeaderRowDef="[
+      'id',
+      'nome',
+      'cognome',
+      'email',
+      'dataNascita',
+      'actions'
+    ]"
+  ></tr>
+  <tr
+    mat-row
+    *matRowDef="
+      let row;
+      columns: ['id', 'nome', 'cognome', 'email', 'dataNascita', 'actions']
+    "
+  ></tr>
+</table>
+
+<mat-paginator
+  [length]="totalUsers"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[5, 10, 25]"
+  (page)="onPaginateChange($event)"
+>
+</mat-paginator>
+
+<form (ngSubmit)="addUser()" #userForm="ngForm" class="user-form">
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Nome"
+      name="nome"
+      [(ngModel)]="newUser.nome"
+      required
+    />
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Cognome"
+      name="cognome"
+      [(ngModel)]="newUser.cognome"
+      required
+    />
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Email"
+      name="email"
+      [(ngModel)]="newUser.email"
+      required
+      type="email"
+    />
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      [matDatepicker]="picker"
+      placeholder="Data di Nascita"
+      name="dataNascita"
+      [(ngModel)]="newUser.dataNascita"
+      required
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <div style="display: flex; justify-content: center; gap: 8px">
+    <button mat-raised-button color="primary" type="submit">
+      {{ newUser.id ? "Modifica Utente" : "Aggiungi Utente" }}
+    </button>
+
+    <button mat-button *ngIf="newUser.id" (click)="cancelEdit()" type="button">
+      Annulla Modifica
+    </button>
+  </div>
+</form>
