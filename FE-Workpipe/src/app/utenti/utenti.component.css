@@ -1,3 +1,10 @@
+.center-title {
+  text-align: center; 
+  margin: 0 auto;    
+  font-size: 2rem;
+  font-weight: bold; 
+}
+
 .user-form {
     padding: 20px;
     display: flex;
