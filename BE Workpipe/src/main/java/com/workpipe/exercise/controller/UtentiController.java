@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping("/api/utenti")
-@CrossOrigin(origins = "http://localhost:4200")
 public class UtentiController {
 
     @Autowired

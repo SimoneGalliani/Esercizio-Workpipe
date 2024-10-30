@@ -22,7 +22,7 @@ export class UtentiComponent implements OnInit {
   loadUsers(page: number, size: number) {
     this.userService.getUsers(page, size).subscribe({
       next: (data) => {
-        this.users = data.content;  // Assicurati di prendere solo la lista utenti
+        this.users = data.content;
         this.totalUsers = data.totalElements;
       },
       error: (err) => console.error('Errore durante il caricamento degli utenti:', err)
@@ -44,7 +44,7 @@ export class UtentiComponent implements OnInit {
   addUser() {
     if (this.newUser.dataNascita) {
       const dataNascita = new Date(this.newUser.dataNascita);
-      dataNascita.setDate(dataNascita.getDate() + 1);
+      dataNascita.setHours(12);
       this.newUser.dataNascita = dataNascita;
     }
   
